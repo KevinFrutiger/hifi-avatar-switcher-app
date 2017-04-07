@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>My Avatars</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<header>My Avatars</script>
+<!-- TODO: query the controller to get list of avatars instead of hardcoding.
+           So we can display the URL -->
+<main>
+  <p><button class="js-avatar-button" value="0">Default</button></p>
+  <p><button class="js-avatar-button" value="1">Avatar 1</button></p>
+  <p><button class="js-avatar-button" value="2">Avatar 2</button></p>
+</main>
+<footer>UI Version 0.1.0</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+
+  $(function() {
+
+    var hasEventBridge = (typeof EventBridge !== 'undefined'); // HiFi
+    var hasConsole = (typeof console !== 'undefined'); // browser
+
+    if (hasEventBridge) {
+      EventBridge.emitWebEvent('Document Ready');
+    } else if (hasConsole) {
+      console.log('Would emit web event with message: Document Read');
+    }
+
+    // Listen for clicks on each avatar button.
+    $('.js-avatar-button').click(function() {
+        var message = JSON.stringify({
+            type: "click",
+            data: parseInt(this.value)
+        });
+
+        // Send the JSON string
+        if (hasEventBridge) {
+          EventBridge.emitWebEvent(message);
+        } else if (hasConsole) {
+          console.log('Would emit web event with message: ' + message);
+        }
+    });
+  });
+
+</script>
+</body>
+</html>
