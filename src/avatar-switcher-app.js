@@ -9,8 +9,8 @@
 // -- Each Interface script runs in its own thread.
 // -- If using a wrapper function for some reason, it has to self-execute.
 
-var APP_NAME = 'MY AVATARS';
-var APP_VIEW_URL = Script.resolvePath('views/app-view.html?cb1');
+var APP_NAME = 'MY AVATAR'; // Button label
+var APP_VIEW_URL = Script.resolvePath('views/app-view.html?cb2');
 var APP_ICON_URL = Script.resolvePath('images/avatar-switcher.svg');
 var AVATAR_URLS = [
   '', // default avatar
