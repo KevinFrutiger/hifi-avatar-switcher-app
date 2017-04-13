@@ -6,11 +6,11 @@
  */
 
 // Reminders:
-// -- Each Interface script runs in its own thread.
+// -- This Interface script, like all Interface scripts, runs in its own thread.
 // -- If using a wrapper function for some reason, it has to self-execute.
 
 var APP_NAME = 'MY AVATAR'; // Button label
-var APP_VIEW_URL = Script.resolvePath('views/app-view.html?cb2');
+var APP_VIEW_URL = Script.resolvePath('views/app-view.html?cb9');
 var APP_ICON_URL = Script.resolvePath('images/avatar-switcher.svg');
 var AVATAR_URLS = [
   '', // default avatar
@@ -25,7 +25,7 @@ var tablet = Tablet.getTablet('com.highfidelity.interface.tablet.system');
 // Add the button the tablet home screen.
 var button = tablet.addButton({text: APP_NAME, icon: APP_ICON_URL});
 
-// Handle click events on the button.
+// Set up button interaction.
 button.clicked.connect(buttonClickedHandler);
 
 function buttonClickedHandler() {
@@ -60,5 +60,6 @@ function webEventReceivedHandler(eventMessage) {
 Script.scriptEnding.connect(cleanup);
 
 function cleanup() {
+  button.clicked.disconnect(buttonClickedHandler);
   tablet.removeButton(button);
 }

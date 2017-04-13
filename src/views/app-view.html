@@ -2,20 +2,107 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>My Avatars</title>
+<title>My Avatar</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600,700" rel="stylesheet">
+<!--
+  Reminders:
+  - Web Screens can't resolve relative resource paths
+  - CSS renderer doesn't respect height: 100%
+-->
+<style>
+  html,
+  body {
+    background-color: #999;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  img {
+    display: block;
+  }
+
+  .header {
+    margin: 0 20px;
+  }
+
+  .main {
+    margin: 0;
+  }
+
+  .avatar-button-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+
+  .avatar-button-list__item {
+    min-height: 75px;
+    min-width: 75px;
+    padding: 10px;
+    width: 50%;
+  }
+
+  .avatar-button {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+  }
+
+  .avatar-button__label {
+    padding: 10px;
+  }
+
+  footer {
+    position: absolute;
+    bottom: 0;
+    margin: 10px;
+  }
+
+</style>
 </head>
 <body>
-<header>My Avatars</script>
+<header class="header">
+  <h1>My Avatar</h1>
+</header>
 <!-- TODO: query the controller to get list of avatars instead of hardcoding.
            So we can display the URL -->
-<main>
-  <p><button class="js-avatar-button" value="0">Default</button></p>
-  <p><button class="js-avatar-button" value="1">Avatar 1</button></p>
-  <p><button class="js-avatar-button" value="2">Avatar 2</button></p>
+<main class="main">
+  <ul class="avatar-button-list">
+    <li class="avatar-button-list__item">
+      <button class="col-3 avatar-button js-avatar-button" value="0">
+        <img src="../images/avatar-default-thumb.jpg" height="220" width="220">
+        <span class="avatar-button__label">Default Avatar</span></button>
+    </li>
+    <li class="col-3 avatar-button-list__item">
+      <button class="avatar-button js-avatar-button" value="1">
+        <img src="../images/avatar-standard-thumb.jpg" height="220" width="220">
+        <span class="avatar-button__label">Standard Avatar</span></button>
+    </li>
+    <li class="col-3 avatar-button-list__item">
+      <button class="avatar-button js-avatar-button" value="2">
+        <img src="../images/avatar-test-thumb.jpg" height="220" width="220">
+        <span class="avatar-button__label">Test Avatar</scan></button>
+    </li>
+  </ul>
 </main>
-<footer>UI Version 0.1.0</footer>
+<footer>UI Version 0.1.7</footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
@@ -24,6 +111,15 @@
 
     var hasEventBridge = (typeof EventBridge !== 'undefined'); // HiFi
     var hasConsole = (typeof console !== 'undefined'); // browser
+
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+
+    if (hasEventBridge) {
+      EventBridge.emitWebEvent('innerWidth = ' + width + ', innerHeight = ' + height);
+    } else if (hasConsole) {
+      console.log('innerWidth = ' + width + ', innerHeight = ' + height);
+    }
 
     if (hasEventBridge) {
       EventBridge.emitWebEvent('Document Ready');
