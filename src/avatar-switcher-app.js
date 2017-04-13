@@ -14,7 +14,8 @@ var APP_VIEW_URL = Script.resolvePath('views/app-view.html?cb9');
 var APP_ICON_URL = Script.resolvePath('images/avatar-switcher.svg');
 var AVATAR_URLS = [
   '', // default avatar
-  'http://www.frutigergroup.com/high_fidelity/avatar/standard/standard.fst',
+  'http://www.frutigergroup.com/high_fidelity/avatar/standard_v2_pkg/' +
+      'standard_v2.fst',
   'http://www.frutigergroup.com/high_fidelity/avatar/my-fourth-avatar-pkg/' +
       'my-fourth-avatar.fst'
 ];
