@@ -112,15 +112,6 @@
     var hasEventBridge = (typeof EventBridge !== 'undefined'); // HiFi
     var hasConsole = (typeof console !== 'undefined'); // browser
 
-    var width = window.innerWidth;
-    var height = window.innerHeight;
-
-    if (hasEventBridge) {
-      EventBridge.emitWebEvent('innerWidth = ' + width + ', innerHeight = ' + height);
-    } else if (hasConsole) {
-      console.log('innerWidth = ' + width + ', innerHeight = ' + height);
-    }
-
     if (hasEventBridge) {
       EventBridge.emitWebEvent('Document Ready');
     } else if (hasConsole) {

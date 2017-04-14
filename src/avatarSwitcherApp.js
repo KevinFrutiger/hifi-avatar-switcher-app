@@ -10,7 +10,7 @@
 // -- If using a wrapper function for some reason, it has to self-execute.
 
 var APP_NAME = 'AVATAR'; // Button label
-var APP_VIEW_URL = Script.resolvePath('views/app-view.html?cb9');
+var APP_VIEW_URL = Script.resolvePath('views/app-view.html?cb12');
 var APP_ICON_URL = Script.resolvePath('images/avatar-switcher.svg');
 var AVATAR_URLS = [
   '', // default avatar
@@ -38,6 +38,8 @@ function buttonClickedHandler() {
 tablet.webEventReceived.connect(webEventReceivedHandler);
 
 function webEventReceivedHandler(eventMessage) {
+  print(eventMessage);
+
   var event;
 
   try {
@@ -49,7 +51,6 @@ function webEventReceivedHandler(eventMessage) {
   }
 
   // Replace the avatar.
-  print(event);
   if (event && event.type === 'click' && event.data in AVATAR_URLS) {
     MyAvatar.skeletonModelURL = AVATAR_URLS[event.data];
   }
