@@ -81,26 +81,8 @@
 <header class="header">
   <h1>My Avatar</h1>
 </header>
-<!-- TODO: query the controller to get list of avatars instead of hardcoding.
-           So we can display the URL -->
 <main class="main">
-  <ul class="avatar-button-list">
-    <li class="avatar-button-list__item">
-      <button class="col-3 avatar-button js-avatar-button" value="0">
-        <img src="../images/avatar-default-thumb.jpg" height="220" width="220">
-        <span class="avatar-button__label">Default Avatar</span></button>
-    </li>
-    <li class="col-3 avatar-button-list__item">
-      <button class="avatar-button js-avatar-button" value="1">
-        <img src="../images/avatar-standard-thumb.jpg" height="220" width="220">
-        <span class="avatar-button__label">Standard Avatar</span></button>
-    </li>
-    <li class="col-3 avatar-button-list__item">
-      <button class="avatar-button js-avatar-button" value="2">
-        <img src="../images/avatar-test-thumb.jpg" height="220" width="220">
-        <span class="avatar-button__label">Test Avatar</scan></button>
-    </li>
-  </ul>
+  <ul class="avatar-button-list js-avatar-list"></ul>
 </main>
 <footer>UI Version 0.1.7</footer>
 
@@ -109,29 +91,78 @@
 
   $(function() {
 
+    // URL for JSON array of avatars. This path be resolved later if we're in HiFi.
+    var dataURL = '../json/avatar-urls.json';
+
     var hasEventBridge = (typeof EventBridge !== 'undefined'); // HiFi
     var hasConsole = (typeof console !== 'undefined'); // browser
+    var hasScript = (typeof Script !== 'undefined'); // HiFi
 
     if (hasEventBridge) {
       EventBridge.emitWebEvent('Document Ready');
     } else if (hasConsole) {
-      console.log('Would emit web event with message: Document Read');
+      console.log('Would emit web event with message: Document Ready');
     }
 
-    // Listen for clicks on each avatar button.
-    $('.js-avatar-button').click(function() {
-        var message = JSON.stringify({
-            type: "click",
-            data: parseInt(this.value)
+    // Resolve the path to JSON file if we're in HiFi.
+    if (hasScript) {
+      dataURL = Script.resolvePath(dataURL);
+    }
+
+    // Get the data.
+    var xhr = $.ajax(dataURL, {
+      dataType: 'json',
+      success: function(data, status, jqXHR) {
+        buildList(data);
+      },
+      error: function(jqXHR, status, error) {
+        if (hasEventBridge) {
+          // In HiFi, error is null.
+          EventBridge.emitWebEvent(status);
+        } else if (hasConsole) {
+          console.error(error);
+        }
+      }
+    });
+
+    function buildList(avatars) {
+      var $docFrag = $(document.createDocumentFragment());
+
+      for (var i = 0; i < avatars.length; i++) {
+
+        var $li = $('<li class="avatar-button-list__item"></li>');
+        var $button = $('<button class="col-3 avatar-button"></button>')
+                      .attr('value', avatars[i].url);
+
+        $button.click(function() {
+          var message = JSON.stringify({
+             type: "click",
+             data: this.value
+          });
+
+          // Send the JSON string
+          if (hasEventBridge) {
+            EventBridge.emitWebEvent(message);
+          } else if (hasConsole) {
+            console.log('Would emit web event with message: ' + message);
+          }
         });
 
-        // Send the JSON string
-        if (hasEventBridge) {
-          EventBridge.emitWebEvent(message);
-        } else if (hasConsole) {
-          console.log('Would emit web event with message: ' + message);
+        // Add the thumbnail and label.
+        if (avatars[i].thumbnail) {
+          $button.append('<img src="' + avatars[i].thumbnail + '" ' +
+                       'height="220" width="220">')
         }
-    });
+
+        $button.append('<span class="avatar-button__label">' +
+                       avatars[i].label + '</span>');
+
+        $li.append($button);
+        $docFrag.append($li);
+      }
+
+      $('.js-avatar-list').append($docFrag);
+    }
   });
 
 </script>

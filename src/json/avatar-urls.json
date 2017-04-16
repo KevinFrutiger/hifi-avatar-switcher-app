@@ -1,0 +1,16 @@
+[{
+    "label": "Default Avatar",
+    "url": "",
+    "thumbnail": "../images/avatar-default-thumb.jpg"
+  },
+  {
+    "label": "Standard Avatar",
+    "url": "http://www.frutigergroup.com/high_fidelity/avatar/standard_v2_pkg/standard_v2.fst",
+    "thumbnail": "../images/avatar-standard-thumb.jpg"
+  },
+  {
+    "label": "Test Avatar",
+    "url": "http://www.frutigergroup.com/high_fidelity/avatar/my-sixth-avatar-pkg/my-sixth-avatar.fst",
+    "thumbnail": "../images/avatar-test-thumb.jpg"
+  }
+]

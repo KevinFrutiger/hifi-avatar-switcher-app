@@ -10,15 +10,10 @@
 // -- If using a wrapper function for some reason, it has to self-execute.
 
 var APP_NAME = 'AVATAR'; // Button label
-var APP_VIEW_URL = Script.resolvePath('views/app-view.html?cb12');
+var APP_VIEW_URL = Script.resolvePath('views/app-view.html?cb14');
 var APP_ICON_URL = Script.resolvePath('images/avatar-switcher.svg');
-var AVATAR_URLS = [
-  '', // default avatar
-  'http://www.frutigergroup.com/high_fidelity/avatar/standard_v2_pkg/' +
-      'standard_v2.fst',
-  'http://www.frutigergroup.com/high_fidelity/avatar/my-fourth-avatar-pkg/' +
-      'my-fourth-avatar.fst'
-];
+// var xhr;
+// var AVATARS = getAvatars(Script.resolvePath('json/avatar-urls'));
 
 // Get a reference to the tablet.
 var tablet = Tablet.getTablet('com.highfidelity.interface.tablet.system');
@@ -51,11 +46,10 @@ function webEventReceivedHandler(eventMessage) {
   }
 
   // Replace the avatar.
-  if (event && event.type === 'click' && event.data in AVATAR_URLS) {
-    MyAvatar.skeletonModelURL = AVATAR_URLS[event.data];
+  if (event && event.type === 'click' && typeof event.data !== 'undefined') {
+    MyAvatar.skeletonModelURL = event.data;
   }
 }
-
 
 /* Cleanup, if script unloaded. */
 
