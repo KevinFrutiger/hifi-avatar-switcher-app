@@ -25,7 +25,11 @@ This app requires [High Fidelity](https://highfidelity.com/download) and a rudem
     * Image thumbnails are 220px x 220px.
     * If you'd pefer not to have a thumbnail, set that value to an empty string.
 
-4. Run `avatarSwitcherApp.js` in High Fidelity via *Edit > Open and Run Script File*.
+3. Load the files in `src/` on a publicly-accessible Web server
+4. Run `avatarSwitcherApp.js` in High Fidelity via *Edit > Open and Run Script from URL...*.
+
+You can run this script locally via *Edit > Open and Run Script File...*, but the
+button on the tablet will be missing the image and will simply say "AVATAR".
 
 If you want to modify the look and feel of the app, you can load `app-view.html` in a standard browser for review (the in-world tablet is 480px x 706px\*). Clicking the buttons simply won't do anything other than output messages to the brower's console.
 
